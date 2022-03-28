@@ -498,7 +498,6 @@ name = "slothserver"
 version = "0.1.0"
 dependencies = [
  "arkos",
- "env_logger",
  "log",
  "serde",
  "serde_json",

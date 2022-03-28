@@ -3,6 +3,7 @@ use arkos::{server::response::Response as AResponse, core::{status::StatusCode, 
 
 use log::trace;
 use serde::{Serialize, Deserialize};
+use serde_json::Value;
 
 use crate::cookie::Cookie;
 
@@ -11,7 +12,7 @@ pub struct Response {
     pub status: u8,
     cookies : Vec<Cookie>, // Create a Cookie struct for modulability
     headers : HashMap<String, String>,
-    body : String
+    body : Value
 }
 
 impl Response {
@@ -31,7 +32,7 @@ impl Response {
             }
 
         }
-        r.set_body(self.body.to_owned());
+        r.set_body(self.body.to_string().to_owned());
         trace!(" Response generated : {r:?} ");
         Ok(r)
     }    
