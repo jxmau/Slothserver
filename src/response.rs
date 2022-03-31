@@ -39,6 +39,16 @@ impl Response {
 }
 
 
+impl Default for Response {
+
+    fn default() -> Self {
+        let mut headers = HashMap::<String, String>::new();
+        headers.insert("Content-Type".into(), "text/plain".into());
+        Self {status: 200, cookies: Vec::new(), headers, body: "Hello, World".into() }
+    }
+
+}
+
 
 
 

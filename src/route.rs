@@ -10,11 +10,17 @@ use crate::response::Response;
 pub struct Route {
     name : String,
     path : String,
+    order: Option<u16>,
     method: String,
     response: Response,    
 }
 
 impl Route {
+
+    pub fn new(name: &str, path: &str, method: &str, order: Option<u16>) -> Self {
+        Self {name: name.into(), order, path: path.into(), method: method.to_uppercase(), response: Response::default()}
+    }
+
 
     pub fn generate(&self) -> Result<ARoute, String> {
 
@@ -41,6 +47,13 @@ pub fn get_method(m: &str) -> Result<HttpMethod, String> {
     )
 }
 
+impl Default for Route {
+
+    fn default() -> Self {
+        Self {name: "New Route".into(), order: None, path: "/".into(), method: "GET".to_string(), response: Response::default()}
+    }
+    
+}
 
 
 #[cfg(test)]

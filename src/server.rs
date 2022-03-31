@@ -12,6 +12,9 @@ pub struct Server {
 
 impl Server {
 
+    pub fn new(port: u16) -> Self {
+        Server {port, routes: vec![Route::default()]}
+    } 
 
     pub fn generate(&self) -> Result<AServer, String> {
         let mut server = AServer::new([127,0,0,1], self.port as u32).unwrap();
@@ -24,6 +27,12 @@ impl Server {
     }
 }
 
+impl Default for Server {
+
+    fn default() -> Self {
+        Server { port: 8080, routes: vec![Route::default()]}
+    }
+}
 
 #[cfg(test)]
 mod server_test{
