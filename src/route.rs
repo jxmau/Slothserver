@@ -8,20 +8,21 @@ use crate::response::Response;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Route {
-    name : String,
-    path : String,
-    order: Option<u16>,
-    method: String,
-    response: Response,    
+    pub name : String,
+    pub path : String,
+    pub order: Option<u16>,
+    pub method: String,
+    pub response: Response,    
 }
 
 impl Route {
-
+    
+    /// Create a new Route.
     pub fn new(name: &str, path: &str, method: &str, order: Option<u16>) -> Self {
         Self {name: name.into(), order, path: path.into(), method: method.to_uppercase(), response: Response::default()}
     }
 
-
+    /// Generate a route for an Arkos Route for the Server. 
     pub fn generate(&self) -> Result<ARoute, String> {
 
         let mut route = ARoute::new(&self.path, get_method(&self.method)?);
@@ -30,6 +31,11 @@ impl Route {
         route.set_static_response(response);
 
         Ok(route)
+    }
+
+    /// Set the order field
+    pub fn set_order(&mut self, o: u16) {
+        self.order = Some(o);
     }
 
 }
@@ -48,9 +54,9 @@ pub fn get_method(m: &str) -> Result<HttpMethod, String> {
 }
 
 impl Default for Route {
-
+    /// Will return a default GET route on the path "/" with a default Response.
     fn default() -> Self {
-        Self {name: "New Route".into(), order: None, path: "/".into(), method: "GET".to_string(), response: Response::default()}
+        Self {name: "New Route".into(), order: Some(1), path: "/".into(), method: "GET".to_string(), response: Response::default()}
     }
     
 }

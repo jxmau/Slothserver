@@ -9,14 +9,14 @@ use crate::cookie::Cookie;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Response {
-    pub status: u8,
-    cookies : Vec<Cookie>, // Create a Cookie struct for modulability
-    headers : HashMap<String, String>,
-    body : Value
+    pub status: u16,
+    pub cookies : Vec<Cookie>, // Create a Cookie struct for modulability
+    pub headers : HashMap<String, String>,
+    pub body : Value
 }
 
 impl Response {
-    /// Generate an Arkos Reason
+    /// Generate an Arkos Response.
     pub fn generate(&self) -> Result<AResponse, String> {
         let mut r = AResponse::default();
         r.status = StatusCode::from_str(&format!("{}", &self.status));
@@ -40,7 +40,8 @@ impl Response {
 
 
 impl Default for Response {
-
+    
+    /// Create a Response of status code 200 OK, with a body of text/plain.
     fn default() -> Self {
         let mut headers = HashMap::<String, String>::new();
         headers.insert("Content-Type".into(), "text/plain".into());
