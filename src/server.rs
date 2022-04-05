@@ -37,6 +37,21 @@ impl Server {
     pub fn get_routes(&self) -> &Vec<Route> {
         &self.routes
     }
+
+    /// Delete a route
+    pub fn delete_route(&mut self, od: u16) {
+        self.routes.remove(od.into());
+    }
+
+    /// Reorganize the od of the routes.
+    pub fn reorganize_routes(&mut self) {
+        let mut od = 1;
+        for r in &mut self.routes {
+            r.set_order(od);
+            od = od + 1;
+        }
+    }
+
 }
 
 impl Default for Server {
@@ -58,4 +73,27 @@ mod server_test{
         let d = serde_json::from_str::<Server>(file);
         assert!(d.is_ok())
     }
+
+    #[test]
+    pub fn reorganize() {
+        let mut server = Server::default();
+        server.add_route(Route::default());
+        server.add_route(Route::default());
+        server.add_route(Route::default());
+        server.reogarnize_routes();
+        let mut od = 1;
+        for r in server.get_routes() {
+            assert_eq!(r.order.unwrap(), od);
+            od = 1 + od;
+        }
+        server.delete_route(2);
+        server.reogarnize_routes();
+        od = 1;
+        for r in server.get_routes() {
+            assert_eq!(r.order.unwrap(), od);
+            od = 1 + od;
+        }
+    }
+
+
 }
