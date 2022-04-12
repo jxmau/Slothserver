@@ -6,7 +6,7 @@ use arkos::server::server::Server as AServer;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Server {
-    port: u16,
+    pub port: u16,
     pub routes : Vec<Route>
 }
 
