@@ -3,8 +3,8 @@ use arkos::core::cookie::Cookie as ACookie;
 
 #[derive(Debug, Serialize, Deserialize)]
 pub struct Cookie {
-    name: String,
-    value: String,
+    pub name: String,
+    pub value: String,
 }
 
 
