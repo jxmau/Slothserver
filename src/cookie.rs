@@ -18,4 +18,9 @@ impl Cookie {
         ACookie::new(self.name.to_owned(), self.value.to_owned())
     }
 
+    /// Create a new cookie
+    pub fn new(name: &str, value: &str) -> Self {
+        Self {name: name.into(), value: value.into() }
+    }
+
 }
