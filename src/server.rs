@@ -80,14 +80,14 @@ mod server_test{
         server.add_route(Route::default());
         server.add_route(Route::default());
         server.add_route(Route::default());
-        server.reogarnize_routes();
+        server.reorganize_routes();
         let mut od = 1;
         for r in server.get_routes() {
             assert_eq!(r.order.unwrap(), od);
             od = 1 + od;
         }
         server.delete_route(2);
-        server.reogarnize_routes();
+        server.reorganize_routes();
         od = 1;
         for r in server.get_routes() {
             assert_eq!(r.order.unwrap(), od);
